@@ -178,15 +178,7 @@ On every push and pull request, GitHub Actions:
 
 ---
 
-## What I Learned
 
-- Separating frontend and backend responsibilities to protect secrets
-- Designing a small REST API with validation and safe error handling
-- Configuring CORS, rate limiting and security headers
-- Building a CI pipeline with GitHub Actions
-- Describing infrastructure as code and deploying to a cloud platform
-
----
 
 ## Author
 
