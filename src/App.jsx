@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from 'react'
-import { getRepositories } from './services/githubService'
+import {
+  getRepositories,
+  getWorkflowRuns
+} from './services/githubService'
 
 const GITHUB_USERNAME = 'Keyvan1369'
 
@@ -8,6 +11,7 @@ function App() {
   const [repositories, setRepositories] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [workflowStatuses, setWorkflowStatuses] = useState({})
 
   useEffect(() => {
     async function fetchRepositories() {
@@ -24,6 +28,32 @@ function App() {
 
     fetchRepositories()
   }, [])
+  useEffect(() => {
+  if (repositories.length === 0) return
+
+  async function fetchWorkflows() {
+    const results = {}
+
+    await Promise.all(
+      repositories.map(async (repo) => {
+        try {
+          const runs = await getWorkflowRuns(
+            GITHUB_USERNAME,
+            repo.name
+          )
+
+          results[repo.id] = runs[0] || null
+        } catch (error) {
+          results[repo.id] = null
+        }
+      })
+    )
+
+    setWorkflowStatuses(results)
+  }
+
+  fetchWorkflows()
+}, [repositories])
 
   return (
     <div className="dashboard">
