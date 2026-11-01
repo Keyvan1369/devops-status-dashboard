@@ -114,9 +114,7 @@ function App() {
             </button>
           </div>
 
-          <p className="text-secondary">
-            Monitoring GitHub repositories for {GITHUB_USERNAME}
-          </p>
+          
         </div>
 
         <div className="row g-4 mb-5">
