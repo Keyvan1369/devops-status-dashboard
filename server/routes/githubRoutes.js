@@ -17,7 +17,11 @@ router.get('/repos/:username', async (req, res) => {
 
     res.json(repositories)
   } catch (error) {
-    console.error('GitHub API Error:', error.message)
+   console.error(
+  'GitHub API Error:',
+  error.response?.status,
+  error.response?.data || error.message
+)
 
     res.status(error.response?.status || 500).json({
       message: 'Failed to fetch GitHub repositories'
@@ -35,7 +39,11 @@ router.get('/repos/:username/:repoName/workflows', async (req, res) => {
 
     res.json(workflows)
   } catch (error) {
-    console.error('Workflow API Error:', error.message)
+    console.error(
+  'Workflow API Error:',
+  error.response?.status,
+  error.response?.data || error.message
+)
 
     res.status(error.response?.status || 500).json({
       message: 'Failed to fetch workflow runs'
