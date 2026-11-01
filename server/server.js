@@ -10,6 +10,17 @@ app.use(helmet())
 app.use(cors({ origin: process.env.CLIENT_ORIGIN }))
 app.use(express.json())
 
+app.set('trust proxy', 1)
+
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    uptimeSeconds: Math.round(process.uptime()),
+    timestamp: new Date().toISOString(),
+    githubTokenConfigured: Boolean(process.env.GITHUB_TOKEN)
+  })
+})
+
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -17,6 +28,7 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: 'Too many requests, please try again later.' }
 })
+
 
 app.use('/api', apiLimiter)
 
