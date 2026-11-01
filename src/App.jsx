@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getRepositories, getWorkflowRuns } from "./services/githubService";
+import SystemStatus from "./components/SystemStatus";
 
 const GITHUB_USERNAME = "Keyvan1369";
 
@@ -89,7 +90,7 @@ function App() {
           <i className="bi bi-cloud-check me-2"></i>
           DevOps Status
         </span>
-        <span className="badge bg-success">GitHub Connected</span>
+        <span className="badge bg-success"><SystemStatus /></span>
       </nav>
 
       <main className="container py-5">
@@ -114,7 +115,7 @@ function App() {
             </button>
           </div>
 
-          
+
         </div>
 
         <div className="row g-4 mb-5">
