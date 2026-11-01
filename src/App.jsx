@@ -1,121 +1,79 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div className="dashboard">
+
+      {/* Navbar */}
+      <nav className="navbar navbar-dark bg-dark px-4">
+        <span className="navbar-brand fw-bold">
+          <i className="bi bi-cloud-check me-2"></i>
+          DevOps Status
+        </span>
+
+        <span className="badge bg-success">
+          System Online
+        </span>
+      </nav>
+
+      {/* Main Content */}
+      <main className="container py-5">
+
+        <div className="mb-5">
+          <h1 className="fw-bold">
+            Deployment Dashboard
+          </h1>
+
+          <p className="text-secondary">
+            Monitor your GitHub repositories and deployments.
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
 
-      <div className="ticks"></div>
+        {/* Statistics */}
+        <div className="row g-4">
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+          <div className="col-md-4">
+            <div className="card dashboard-card">
+              <div className="card-body">
+                <i className="bi bi-github fs-2"></i>
+                <h5 className="mt-3">Repositories</h5>
+                <h2>0</h2>
+                <small className="text-secondary">
+                  GitHub projects
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="card dashboard-card">
+              <div className="card-body">
+                <i className="bi bi-check-circle fs-2 text-success"></i>
+                <h5 className="mt-3">Successful Deployments</h5>
+                <h2>0</h2>
+                <small className="text-secondary">
+                  Last 7 days
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div className="col-md-4">
+            <div className="card dashboard-card">
+              <div className="card-body">
+                <i className="bi bi-clock-history fs-2 text-warning"></i>
+                <h5 className="mt-3">Last Deployment</h5>
+                <h2>--</h2>
+                <small className="text-secondary">
+                  Latest update
+                </small>
+              </div>
+            </div>
+          </div>
+
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+      </main>
+    </div>
   )
 }
 
