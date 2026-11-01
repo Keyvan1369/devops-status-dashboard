@@ -20,3 +20,23 @@ export async function getRepositories(username) {
     throw error
   }
 }
+
+export async function getWorkflowRuns(username, repoName) {
+  try {
+    const response = await fetch(
+      `${GITHUB_API}/repos/${username}/${repoName}/actions/runs?per_page=1`
+    )
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch workflows for ${repoName}`)
+    }
+
+    const data = await response.json()
+
+    return data.workflow_runs
+  } catch (error) {
+    console.error('GitHub Actions API Error:', error)
+    throw error
+  }
+}
+
