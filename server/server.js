@@ -1,12 +1,25 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
+const helmet = require('helmet')
+const rateLimit = require('express-rate-limit')
 
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.use(helmet())
+
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many requests, please try again later.' }
+})
+
+app.use('/api', apiLimiter)
 
 const githubRoutes = require('./routes/githubRoutes')
 app.use('/api/github', githubRoutes)
