@@ -11,6 +11,22 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState("All");
 
+  const [refreshing, setRefreshing] = useState(false);
+
+  async function refreshDashboard() {
+    try {
+      setRefreshing(true);
+      setError(null);
+
+      const data = await getRepositories(GITHUB_USERNAME);
+      setRepositories(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setRefreshing(false);
+    }
+  }
+
   useEffect(() => {
     async function fetchRepositories() {
       try {
@@ -78,7 +94,26 @@ function App() {
 
       <main className="container py-5">
         <div className="mb-5">
-          <h1 className="fw-bold">Deployment Dashboard</h1>
+          <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+              <h1 className="fw-bold">Deployment Dashboard</h1>
+              <p className="text-secondary">
+                Monitoring GitHub repositories for {GITHUB_USERNAME}
+              </p>
+            </div>
+
+            <button
+              className="btn btn-dark"
+              onClick={refreshDashboard}
+              disabled={refreshing}
+            >
+              <i
+                className={`bi bi-arrow-clockwise me-2 ${refreshing ? "spin" : ""}`}
+              ></i>
+              {refreshing ? "Refreshing..." : "Refresh Data"}
+            </button>
+          </div>
+
           <p className="text-secondary">
             Monitoring GitHub repositories for {GITHUB_USERNAME}
           </p>
@@ -99,7 +134,6 @@ function App() {
 
         <h4 className="fw-bold mb-4">Your Repositories</h4>
 
-        {/* فیلترها و جستجو */}
         <div className="row g-3 mb-4">
           <div className="col-md-8">
             <input

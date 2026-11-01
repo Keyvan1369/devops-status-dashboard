@@ -69,3 +69,13 @@ main p {
     padding: 22px;
   }
 }
+.spin {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
