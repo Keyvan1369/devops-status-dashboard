@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'
 import {
   getRepositories,
@@ -28,36 +27,36 @@ function App() {
 
     fetchRepositories()
   }, [])
+
   useEffect(() => {
-  if (repositories.length === 0) return
+    if (repositories.length === 0) return
 
-  async function fetchWorkflows() {
-    const results = {}
+    async function fetchWorkflows() {
+      const results = {}
 
-    await Promise.all(
-      repositories.map(async (repo) => {
-        try {
-          const runs = await getWorkflowRuns(
-            GITHUB_USERNAME,
-            repo.name
-          )
+      await Promise.all(
+        repositories.map(async (repo) => {
+          try {
+            const runs = await getWorkflowRuns(
+              GITHUB_USERNAME,
+              repo.name
+            )
 
-          results[repo.id] = runs[0] || null
-        } catch (error) {
-          results[repo.id] = null
-        }
-      })
-    )
+            results[repo.id] = runs[0] || null
+          } catch (error) {
+            results[repo.id] = null
+          }
+        })
+      )
 
-    setWorkflowStatuses(results)
-  }
+      setWorkflowStatuses(results)
+    }
 
-  fetchWorkflows()
-}, [repositories])
+    fetchWorkflows()
+  }, [repositories])
 
   return (
     <div className="dashboard">
-
       <nav className="navbar navbar-dark px-4">
         <span className="navbar-brand fw-bold">
           <i className="bi bi-cloud-check me-2"></i>
@@ -68,7 +67,6 @@ function App() {
       </nav>
 
       <main className="container py-5">
-
         <div className="mb-5">
           <h1 className="fw-bold">Deployment Dashboard</h1>
           <p className="text-secondary">
@@ -114,6 +112,40 @@ function App() {
                       {repo.description || 'No description available.'}
                     </p>
 
+                    <div className="mt-3 mb-3">
+                      <small className="text-secondary d-block mb-1">
+                        Latest GitHub Actions
+                      </small>
+
+                      {!Object.prototype.hasOwnProperty.call(
+                        workflowStatuses,
+                        repo.id
+                      ) ? (
+                        <span className="text-secondary small">
+                          <span className="spinner-border spinner-border-sm me-2"></span>
+                          Checking...
+                        </span>
+                      ) : workflowStatuses[repo.id] ? (
+                        <span className={`badge ${
+                          workflowStatuses[repo.id].conclusion === 'success'
+                            ? 'bg-success'
+                            : workflowStatuses[repo.id].status === 'in_progress'
+                              ? 'bg-warning text-dark'
+                              : workflowStatuses[repo.id].conclusion === 'failure'
+                                ? 'bg-danger'
+                                : 'bg-secondary'
+                        }`}>
+                          {workflowStatuses[repo.id].status === 'in_progress'
+                            ? 'In Progress'
+                            : workflowStatuses[repo.id].conclusion || 'Completed'}
+                        </span>
+                      ) : (
+                        <span className="badge bg-secondary">
+                          No Workflow Data
+                        </span>
+                      )}
+                    </div>
+
                     <div className="d-flex gap-3 small mb-3">
                       <span>
                         <i className="bi bi-star me-1"></i>
@@ -142,7 +174,6 @@ function App() {
             ))}
           </div>
         )}
-
       </main>
     </div>
   )
